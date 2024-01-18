@@ -1,13 +1,21 @@
 const express = require("express");
-const champsRoutes = require("./routes/champs");
-const itemsRoutes = require("./routes/items");
+const activitiesRoutes = require("./routes/Activity");
+const cookieParser = require("cookie-parser");
+require("dotenv").config();
 
 const app = express();
+const PORT = 8080 || process.env.PORT;
+const connectDB = require("./config/db");
+
+// Connect DB
+connectDB();
 
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(cookieParser());
 
-app.use("/api/v1/champs", champsRoutes);
-app.use("/api/v1/items", itemsRoutes);
+app.use("/api/v1/activity", activitiesRoutes);
 
-app.listen(8080, () => console.log("Running server on http://localhost:8080"));
+app.listen(PORT, () =>
+  console.log(`Running server on http://localhost:${PORT}`)
+);
